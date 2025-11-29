@@ -15,4 +15,4 @@ devMultipler = 10
 	if(score=15)room_goto(Room_money);
 	
 	
-	   audio_play_sound(coinsound,10,false);
+	if (global.play_sound=true)   audio_play_sound(coinsound,10,false);

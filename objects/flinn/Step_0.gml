@@ -16,7 +16,7 @@ var jump = keyboard_check_pressed(vk_space);
 if on_ground and jump
 {
 	ydir -= jstr;
-	audio_play_sound(up,10,false);
+if (global.play_sound=true)	audio_play_sound(up,10,false);
 }
 if not place_meeting(x+xdir,y,wallE)
 { 
@@ -34,7 +34,7 @@ else
 	y += 1;
 }
 ydir = 0;
-audio_play_sound(down,10,false);
+if (global.play_sound=true)audio_play_sound(down,10,false);
 }
 
 

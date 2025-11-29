@@ -1,3 +1,5 @@
+global.play_sound=true;
+
 ms = 3;
 
 xdir = 0;
@@ -10,4 +12,5 @@ on_ground = 0
 
 window_set_fullscreen(true)
 
-audio_play_sound(funtime,1,false)
+if  (global.play_sound=true) audio_play_sound(funtime,1,false)
+
