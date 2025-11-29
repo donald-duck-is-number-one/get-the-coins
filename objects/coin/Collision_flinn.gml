@@ -3,7 +3,7 @@ score += 1;
 image_index = random(image_number);
 
 
-devMultipler = 10
+devMultipler = 1
 
 	
 	if(score=1*devMultipler) room_goto(Room_lava);
