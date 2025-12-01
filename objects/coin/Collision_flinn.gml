@@ -3,7 +3,7 @@ score += 1;
 image_index = random(image_number);
 
 
-devMultipler = 1
+devMultipler = 10
 
 	
 	if(score=1*devMultipler) room_goto(Room_lava);
@@ -12,7 +12,7 @@ devMultipler = 1
 
 	if(score=4*devMultipler) room_goto(Room_castle);
 	
-	if(score=15)room_goto(Room_money);
+	if(score=15*devMultipler)room_goto(Room_money);
 	
 	
 	if (global.play_sound=true)   audio_play_sound(coinsound,10,false);
