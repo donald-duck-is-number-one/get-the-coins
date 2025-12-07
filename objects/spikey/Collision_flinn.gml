@@ -1,3 +1,3 @@
 score-=1;
 
-	if(score < -30)room_goto(Room_prison);
+	if(score < -1)room_goto(Room_prison);
