@@ -16,7 +16,6 @@ jobs:
       - name: Setup Igor
         uses: bscotch/igor-setup@v3
         with:
-          runtime-version: 2024.2.0.132
           access-key: ${{ secrets.ACCESS_KEY }} # https://gamemaker.io/en/account/access-keys
 
       - name: Build HTML5/WASM
