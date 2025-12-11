@@ -24,7 +24,7 @@ jobs:
         shell: pwsh
         run: |
           $runtimePath = "${{ steps.igor.outputs.runtime-dir }}"
-          $igor = Join-Path $runtimePath "Igor.exe"
+          $igor = "$runtimePath/bin/igor/windows/win32/Igor.exe"
 
           & $igor `
             /project="${{ github.workspace }}\project.yyp" `
