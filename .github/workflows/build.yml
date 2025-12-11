@@ -21,10 +21,10 @@ jobs:
 
       - name: Build HTML5/WASM
         run: |
-          "C:\Path\To\Igor.exe" ^
-            /project="${{ github.workspace }}\project.yyp" ^
-            /runtime="C:\Path\To\Runtime" ^
-            /target=html5 ^
+          "C:\Path\To\Igor.exe"
+            /project="${{ github.workspace }}\project.yyp"
+            /runtime="C:\Path\To\Runtime"
+            /target=html5
             /output="${{ github.workspace }}\build\html5"
 
       - name: Upload build artifacts
