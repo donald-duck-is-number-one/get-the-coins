@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+env:
+  RUNTIME_VERSION: "2024.2.0.132"
+
 jobs:
   build-gamemaker:
     runs-on: windows-latest
@@ -13,18 +16,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Igor
-        uses: bscotch/igor-setup@v3
-        id: igor
+      - name: Setup GameMaker Runtime
+        uses: bscotch/igor-setup@v1
         with:
+          runtime-version: ${{ env.RUNTIME_VERSION }}
           access-key: ${{ secrets.ACCESS_KEY }} # https://gamemaker.io/en/account/access-keys
-          target-yyp:  ${{ github.workspace }}/boo.yyp
+
       - name: Build HTML5/WASM
-        uses: bscotch/igor-build@v1
-        with:
-          yyp-path: ${{ github.workspace }}/boo.yyp
-          user-dir: ${{ steps.igor.outputs.user-dir }}
-          platform: html5
+        shell: pwsh
+        run: |
+          $igor = "C:\ProgramData\GameMakerStudio2\Cache\runtimes\${{ env.RUNTIME_VERSION }}\bin\Igor.exe"
+          $runtimePath = "C:\ProgramData\GameMakerStudio2\Cache\runtimes\${{ env.RUNTIME_VERSION }}"
+
+          & $igor `
+            /project="${{ github.workspace }}\project.yyp" `
+            /runtime="$runtimePath" `
+            /target=html5 `
+            /output="${{ github.workspace }}\build\html5"
 
       - name: Upload HTML5 build
         uses: actions/upload-artifact@v4
@@ -58,4 +66,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/your-game:latest
+          tags: ghcr.io/${{ github.repository_owner }}/get-the-coins:latest
