@@ -23,8 +23,7 @@ jobs:
         with:
           create-local-settings: true
           yyp-path: ${{ github.workspace }}/boo.yyp
-          target: html5
-          output-dir: ${{ github.workspace }}/build/html5
+          platform: html5
 
       - name: Upload HTML5 build
         uses: actions/upload-artifact@v4
