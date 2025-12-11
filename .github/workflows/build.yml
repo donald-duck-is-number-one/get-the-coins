@@ -26,8 +26,8 @@ jobs:
       - name: Build HTML5/WASM
         shell: pwsh
         run: |
-          $igor = "C:\ProgramData\GameMakerStudio2\Cache\runtimes\${{ env.RUNTIME_VERSION }}\bin\Igor.exe"
-          $runtimePath = "C:\ProgramData\GameMakerStudio2\Cache\runtimes\${{ env.RUNTIME_VERSION }}"
+          $runtimePath = "C:\hostedtoolcache\windows\igor\${{ env.RUNTIME_VERSION }}"
+          $igor = "$runtimePath\x64\Igor.exe"
 
           & $igor `
             /project="${{ github.workspace }}\project.yyp" `
