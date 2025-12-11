@@ -16,11 +16,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup GameMaker Runtime
-        uses: bscotch/igor-setup@v1
+      - name: Setup Igor
+        uses: bscotch/igor-setup@v3
         with:
-          runtime-version: ${{ env.RUNTIME_VERSION }}
           access-key: ${{ secrets.ACCESS_KEY }} # https://gamemaker.io/en/account/access-keys
+          target-yyp:  ${{ github.workspace }}/boo.yyp
+          runtime-version: ${{ env.RUNTIME_VERSION }}
 
       - name: Build HTML5/WASM
         shell: pwsh
