@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  RUNTIME_VERSION: "2024.14.1.253"
+  RUNTIME_VERSION: "2024.10.1.45"
 
 jobs:
   build-gamemaker:
@@ -22,6 +22,7 @@ jobs:
           access-key: ${{ secrets.ACCESS_KEY }} # https://gamemaker.io/en/account/access-keys
           target-yyp:  ${{ github.workspace }}/boo.yyp
           runtime-version: ${{ env.RUNTIME_VERSION }}
+
       - name: Debug Igor install
         shell: pwsh
         run: |
