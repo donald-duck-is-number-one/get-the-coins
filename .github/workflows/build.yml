@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+env:
+  RUNTIME_VERSION: "2024.2.0.132"
+
 jobs:
   build-gamemaker:
     runs-on: windows-latest
@@ -13,21 +16,39 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up GameMaker
-        # You’ll need to provide your own GameMaker install or cache it.
-        # Some people commit the runtime; others download it.
+      - name: Cache GameMaker runtime
+        uses: actions/cache@v4
+        with:
+          path: C:\gm-runtime
+          key: gm-runtime-${{ env.RUNTIME_VERSION }}
+
+      - name: Download GameMaker runtime
+        if: steps.cache.outputs.cache-hit != 'true'
+        shell: pwsh
         run: |
-          echo "Install or prepare GameMaker here"
+          $runtimeVersion = "${{ env.RUNTIME_VERSION }}"
+          $runtimeZip = "Zeus-Runtime-$runtimeVersion.zip"
+          $runtimeUrl = "https://gms.yoyogames.com/$runtimeZip"
+
+          Write-Host "Downloading runtime $runtimeVersion"
+          Invoke-WebRequest -Uri $runtimeUrl -OutFile $runtimeZip
+
+          Write-Host "Extracting runtime"
+          Expand-Archive -Path $runtimeZip -DestinationPath "C:\gm-runtime" -Force
 
       - name: Build HTML5/WASM
+        shell: pwsh
         run: |
-          "C:\Path\To\Igor.exe"
-            /project="${{ github.workspace }}\project.yyp"
-            /runtime="C:\Path\To\Runtime"
-            /target=html5
+          $igor = "C:\ProgramData\GameMakerStudio2\Cache\runtimes\${{ env.RUNTIME_VERSION }}\bin\Igor.exe"
+          $runtimePath = "C:\gm-runtime\Zeus-Runtime-${{ env.RUNTIME_VERSION }}"
+
+          & $igor `
+            /project="${{ github.workspace }}\project.yyp" `
+            /runtime="$runtimePath" `
+            /target=html5 `
             /output="${{ github.workspace }}\build\html5"
 
-      - name: Upload build artifacts
+      - name: Upload HTML5 build
         uses: actions/upload-artifact@v4
         with:
           name: html5-build
